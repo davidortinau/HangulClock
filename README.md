@@ -12,6 +12,8 @@ I have taken 2 C# approaches to creating this experience, and both use the same 
 
 ## Comet
 
+[Getting Started with Comet](https://dev.to/davidortinau/comet-development-on-macos-1o38)
+
 [Comet](https://github.com/dotnet/comet) is an simple, C# framework for building [.NET MAUI](https://github.com/dotnet/maui) apps that run on Android, iOS, macOS, and Windows. Comet manages state in the style of Model-View-Update (MVU) which means the timer updates a state object, and the views react to the state changes. The Comet efficiently difs the changes needed to the UI and applies them.
 
 ```csharp
