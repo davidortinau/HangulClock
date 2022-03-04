@@ -13,11 +13,9 @@ public class App : CometApp
 			.ConfigureFonts(fonts => {
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-		//-:cnd
-#if DEBUG
+// #if DEBUG
 			builder.EnableHotReload();
-#endif
-		//+:cnd
+// #endif
 		return builder.Build();
 	}
 }

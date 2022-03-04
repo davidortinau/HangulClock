@@ -14,7 +14,7 @@ public class MainPage : View
 	Grid Overlay;
 	Text OverlayText;
 
-	readonly string[] HoursMap = { "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한아", "열둘" };
+	readonly string[] HoursMap = { "열둘", "한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한아" };
 	readonly string[] MinutesMap = { 
 		"정", "일", "이", "삼", "사", "오", "육", "칠", "팔", "구", 
 		"십", "십일", "십이", "십삼", "십사", "십오", "십육", "십칠", "십팔", "십구",
@@ -35,26 +35,39 @@ public class MainPage : View
 			.FontSize(64)
 			.Color(()=>GetColor(Now, val, row, column))
 			.Opacity(()=>GetOpacity(Now, val, row, column));
-		t.Cell(row, column);
+		// t.Cell(row, column);
 		return t;
 	}
 
+	// "다섯", "여섯"
 	Color GetColor(State<DateTime> d, string s, int row, int column)
 	{
 		Color c  = Colors.White;
-		if(row < 3 && (HoursMap[d.Value.Hour % 12].IndexOf($"{s}") >= 0 || s == "시")){
+		string hourStr = HoursMap[d.Value.Hour % 12];
+		if(row < 3 && (hourStr.IndexOf($"{s}") >= 0 || s == "시")){
 			// there are some duplicates, so how do we know which to use?
 			// 5, 6, 11, 12
-
-			c = Colors.LawnGreen;
+			if("다섯, 여섯, 여덟, 열한아, 열둘".IndexOf(hourStr) >= 0){ // are we one of the problematic ?
+				if(
+					(hourStr == "다섯" && row == 0)
+					|| (hourStr == "여섯" && row == 1 && column < 1)
+					|| (hourStr == "여덟" && row == 1 && column > 1)
+					|| (hourStr == "열한아" && row == 2)
+					|| (hourStr == "열둘" && row == 2)
+				){
+					c = Colors.LawnGreen;	
+				}//skips the rest
+			}else{
+				c = Colors.LawnGreen;
+			}
 		}else if(row > 2 && (MinutesMap[d.Value.Minute].IndexOf($"{s}") >= 0 || s == "분")){
 			if(row == 3){
-				if(MinutesMap[d.Value.Minute].IndexOf("십") == 1 
+				if((MinutesMap[d.Value.Minute].IndexOf("십") == 1 || MinutesMap[d.Value.Minute].IndexOf("십") == 0) 
 					&& MinutesMap[d.Value.Minute].IndexOf($"{s}") <= 1)
 					c = Colors.OrangeRed;
 			}else{
-				if(MinutesMap[d.Value.Minute].IndexOf("십") == 1){ 
-					if(MinutesMap[d.Value.Minute].LastIndexOf($"{s}") > 1)
+				if((MinutesMap[d.Value.Minute].IndexOf("십") == 1 || MinutesMap[d.Value.Minute].IndexOf("십") == 0)){ 
+					if(MinutesMap[d.Value.Minute].LastIndexOf($"{s}") > 0)
 						c = Colors.OrangeRed;
 				}else{
 					c = Colors.OrangeRed;
@@ -67,16 +80,29 @@ public class MainPage : View
 	double GetOpacity(State<DateTime> d, string s, int row, int column)
 	{
 		double o  = 0.2;
-		if(row < 3 && (HoursMap[d.Value.Hour % 12].IndexOf($"{s}") >= 0 || s == "시")){
-			o = 1.0;
+		string hourStr = HoursMap[d.Value.Hour % 12];
+		if(row < 3 && (hourStr.IndexOf($"{s}") >= 0 || s == "시")){
+			if("다섯, 여섯, 여덟, 열한아, 열둘".IndexOf(hourStr) >= 0){ // are we one of the problematic ?
+				if(
+					(hourStr == "다섯" && row == 0)
+					|| (hourStr == "여섯" && row == 1 && column < 1)
+					|| (hourStr == "여덟" && row == 1 && column > 1)
+					|| (hourStr == "열한아" && row == 2)
+					|| (hourStr == "열둘" && row == 2)
+				){
+					o = 1.0;
+				}//skips the rest
+			}else{
+				o = 1.0;
+			}
 		}else if(row > 2 && (MinutesMap[d.Value.Minute].IndexOf($"{s}") >= 0 || s == "분")){
 			if(row == 3){
-				if(MinutesMap[d.Value.Minute].IndexOf("십") == 1 
+				if((MinutesMap[d.Value.Minute].IndexOf("십") == 1 || MinutesMap[d.Value.Minute].IndexOf("십") == 0) 
 					&& MinutesMap[d.Value.Minute].IndexOf($"{s}") <= 1)
 					o = 1.0;
 			}else{
-				if(MinutesMap[d.Value.Minute].IndexOf("십") == 1){ 
-					if(MinutesMap[d.Value.Minute].LastIndexOf($"{s}") > 1)
+				if((MinutesMap[d.Value.Minute].IndexOf("십") == 1 || MinutesMap[d.Value.Minute].IndexOf("십") == 0)){ 
+					if(MinutesMap[d.Value.Minute].LastIndexOf($"{s}") > 0)
 						o = 1.0;
 				}else{
 					o = 1.0;
@@ -110,9 +136,7 @@ public class MainPage : View
 	[Body]
 	View body()
 		=> new Grid(rows: new object[] { "50", "*"}){
-				new Grid (
-					columns: new object[] { "*", "*","*", "*","*", "*" },
-					rows: new object[] { "*", "*","*", "*","*", "*" })
+				new VGrid (6)
 				{
 					HangulText("한", row:0, column: 0),
 					HangulText("두", row:0, column: 1),
