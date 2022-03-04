@@ -51,7 +51,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.0.0-pre3" />
+		<PackageReference Include="CommunityToolkit.Maui.Markup" Version="1.0.0-pre7" />
+		<PackageReference Include="Reloadify3000" Version="1.0.8" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">

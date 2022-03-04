@@ -129,7 +129,7 @@ public class MainPage : ContentPage
 	enum Column { First, Second, Third, Fourth, Fifth, Sixth }
 	void Build() => Content = 
         new Grid { 
-            BackgroundColor = Color.FromHex("#101010"),
+            BackgroundColor = Color.FromArgb("#101010"),
             Children = {
             (tileGrid = new Grid {
 				RowDefinitions = Rows.Define (
@@ -234,8 +234,11 @@ public class MainPage : ContentPage
 
     private void timer_Handler(object sender, System.Timers.ElapsedEventArgs e)
     {
-        ResetGrid();
-        UpdateGrid();
+        Dispatcher.Dispatch(() =>{
+            ResetGrid();
+            UpdateGrid();
+        });
+
     }
 
     private void UpdateGrid()
