@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Maui.Markup;
+using System.Reflection;
+using System.Reflection.Metadata;
 using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace HangulClock;
@@ -27,7 +29,6 @@ public class TimeModel
         return new TimeModel(label, pc.ToArray<Point>());
     }
 }
-
 
 public class MainPage : ContentPage
 {
@@ -201,19 +202,14 @@ public class MainPage : ContentPage
 				}
             })
             .Margins(top: 30, bottom: 30, left:30, right:30)
-            .CenterHorizontal().CenterVertical().TapGesture((t) =>
-            {
-                t.Tapped += (s,e)=>{
-                    Build();
-                };
-            })
+            .CenterHorizontal().CenterVertical()
         } };
 
 		class TitleLabel : Label
 		{
 			public TitleLabel()
 			{
-				FontSize = 64;
+				FontSize = 32;
 				TextColor = Colors.White;
                 Opacity = 0.2;
 
@@ -230,6 +226,17 @@ public class MainPage : ContentPage
         _timer = new System.Timers.Timer()
         { Interval = 1000, Enabled = true };
         _timer.Elapsed += timer_Handler;
+
+#if DEBUG
+        HotReloadService.UpdateApplicationEvent += (obj) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Build();
+            });
+            
+        };
+#endif
     }
 
     private void timer_Handler(object sender, System.Timers.ElapsedEventArgs e)
