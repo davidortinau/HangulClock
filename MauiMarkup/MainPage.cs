@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui.Markup;
+﻿using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Markup;
 using System.Reflection;
 using System.Reflection.Metadata;
 using static CommunityToolkit.Maui.Markup.GridRowsColumns;
@@ -126,7 +128,10 @@ public class MainPage : ContentPage
 
     private System.Timers.Timer _timer;
 
-    enum Row { First, Second, Third, Fourth, Fifth, Sixth }
+    private double _windowMargin = (DeviceInfo.Idiom == DeviceIdiom.Phone) ? 15 : 30;
+    private Label pageTitle;
+
+    enum Row { Title, First, Second, Third, Fourth, Fifth, Sixth }
 	enum Column { First, Second, Third, Fourth, Fifth, Sixth }
 	void Build() => Content = 
         new Grid { 
@@ -134,6 +139,7 @@ public class MainPage : ContentPage
             Children = {
             (tileGrid = new Grid {
 				RowDefinitions = Rows.Define (
+                    (Row.Title, Auto),
 					(Row.First	, Star),
 					(Row.Second , Star),
 					(Row.Third  , Star),
@@ -199,17 +205,24 @@ public class MainPage : ContentPage
 					new TitleLabel{ Text = "팔"}.Row(Row.Sixth).Column(Column.Fourth),
 					new TitleLabel{ Text = "구"}.Row(Row.Sixth).Column(Column.Fifth),
 					new TitleLabel{ Text = "분"}.Row(Row.Sixth).Column(Column.Sixth),
+
+                    // title
+                    new Label{Text = "지금 몇 시예요?", TextColor = Colors.White, FontSize = 44, HorizontalTextAlignment = TextAlignment.Center }
+                        .Row(Row.Title).ColumnSpan(6)
+                        .Center()
+                        .Assign(out pageTitle)
+
 				}
             })
-            .Margins(top: 30, bottom: 30, left:30, right:30)
-            .CenterHorizontal().CenterVertical()
+            .Margins(top: _windowMargin, bottom: _windowMargin, left: _windowMargin, right: _windowMargin)
+            //.CenterHorizontal().CenterVertical()
         } };
 
 		class TitleLabel : Label
 		{
 			public TitleLabel()
 			{
-				FontSize = 32;
+				FontSize = (DeviceInfo.Idiom == DeviceIdiom.Phone) ? 32 : 64;
 				TextColor = Colors.White;
                 Opacity = 0.2;
 
@@ -222,7 +235,14 @@ public class MainPage : ContentPage
     
     public MainPage()
     {
+        this.Behaviors.Add(new StatusBarBehavior
+        {
+            StatusBarColor = Color.FromRgba("#000000"),
+            StatusBarStyle = StatusBarStyle.DarkContent
+        });
+
         Build();
+
         _timer = new System.Timers.Timer()
         { Interval = 1000, Enabled = true };
         _timer.Elapsed += timer_Handler;
@@ -290,5 +310,7 @@ public class MainPage : ContentPage
             ((Label)l).Opacity = 0.2;
             ((Label)l).TextColor = Colors.White;
         }
+
+        pageTitle.Opacity = 1;
     }
 }

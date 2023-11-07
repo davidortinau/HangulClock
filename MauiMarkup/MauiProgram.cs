@@ -1,4 +1,6 @@
-﻿namespace HangulClock;
+﻿using CommunityToolkit.Maui;
+
+namespace HangulClock;
 
 public static class MauiProgram
 {
@@ -7,12 +9,11 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
-
-		//Reloadify.Reload.Init();
 
 		return builder.Build();
 	}
