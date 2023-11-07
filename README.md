@@ -8,56 +8,11 @@ This is a Korean word clock inspired by several craft projects including:
 * https://hangulclock.today/
 * https://www.instructables.com/Korean-Clock-HA-Yong-Son/
 
-I have taken 2 C# approaches to creating this experience, and both use the same [.NET MAUI](https://github.com/dotnet/maui) library to render native apps for Android, iOS, macOS, and Windows. 
-
-## Comet
-
-[Getting Started with Comet](https://dev.to/davidortinau/comet-development-on-macos-1o38)
-
-[Comet](https://github.com/dotnet/comet) is an simple, C# framework for building [.NET MAUI](https://github.com/dotnet/maui) apps that run on Android, iOS, macOS, and Windows. Comet manages state in the style of Model-View-Update (MVU) which means the timer updates a state object, and the views react to the state changes. The Comet efficiently difs the changes needed to the UI and applies them.
-
-```csharp
-new Grid (
-    columns: new object[] { "*", "*","*", "*","*", "*" },
-    rows: new object[] { "*", "*","*", "*","*", "*" })
-    {
-        HangulText("한", row: 0, column: 0),
-        HangulText("두", row: 0, column: 1),
-        HangulText("세", row: 0, column: 2),
-        HangulText("네", row: 0, column: 3),
-        HangulText("다", row: 0, column: 4),
-        HangulText("섯", row: 0, column: 5),
-    ...
-    }.Background("#101010")
-```
-
-```csharp
-private void timer_Handler(object sender, System.Timers.ElapsedEventArgs e)
-{
-    Now.Value = DateTime.Now;
-}
-```
-
-The state object `Now` will then update everywhere it's used. and Comet will update accordingly. My method `HangulText` that generates the `Text` controls, uses `Now` and helper methods to set the `Color` and `Opacity`. Those methods are re-eveluated when state is "updated".
-
-```csharp
-Text HangulText(Binding<string> val, int row, int column)
-{
-    var t = new Text(val)
-        .VerticalTextAlignment(TextAlignment.Center)
-        .HorizontalTextAlignment(TextAlignment.Center)
-        .Frame(height: 64, width: 64)
-        .FontSize(64)
-        .Color(()=>GetColor(Now, val, row, column))
-        .Opacity(()=>GetOpacity(Now, val, row, column));
-    t.Cell(row, column);
-    return t;
-}
-```
+I built this digital clock with [.NET MAUI](https://github.com/dotnet/maui) to render native apps for Android, iOS, macOS, and Windows. 
 
 ## Maui.Markup
 
-.NET MAUI traditionally favors writing UI in XAML, and XML based markup language that provides separation between UI and logic. By using the .NET MAUI Community Toolkit's [Maui.Markup](https://github.com/CommunityToolkit/Maui.Markup) helpers, we can remove the complexity of XAML and stick with C# alone. 
+.NET MAUI traditionally favors writing UI in XAML, an XML based markup language that provides separation between UI and logic. By using the .NET MAUI Community Toolkit's [Maui.Markup](https://github.com/CommunityToolkit/Maui.Markup) helpers, we can remove the complexity of XAML and stick with C# alone. 
 
 ```csharp
 new Grid { 
