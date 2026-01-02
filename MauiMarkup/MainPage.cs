@@ -9,8 +9,8 @@ namespace HangulClock;
 
 public class TimeModel
 {
-    public string Label { get;set; }
-    public Point[] Tiles { get;set; }
+    public string Label { get; set; }
+    public Point[] Tiles { get; set; }
 
     public TimeModel(string label, Point[] tiles)
     {
@@ -38,7 +38,7 @@ public class MainPage : ContentPage
 
     readonly TimeModel[] HoursMap = {
         new TimeModel("열두", new Point[]{ new Point(2,2), new Point(4,2) }),
-        new TimeModel("한", new Point[]{ new Point(0,0) }), 
+        new TimeModel("한", new Point[]{ new Point(0,0) }),
         new TimeModel("두", new Point[]{ new Point(1,0) }),
         new TimeModel("세", new Point[]{ new Point(2,0) }),
         new TimeModel("네", new Point[]{ new Point(3,0) }),
@@ -53,12 +53,12 @@ public class MainPage : ContentPage
 
     readonly TimeModel[] MinutesMap = {
         TimeModel.Make("정", new string[]{"0,4"}),
-        TimeModel.Make("일", new string[]{"0,3"}),
-        TimeModel.Make("이", new string[]{"1,3"}),
-        TimeModel.Make("삼", new string[]{"2,3"}),
-        TimeModel.Make("사", new string[]{"3,3"}),
-        TimeModel.Make("오", new string[]{"4,3"}),
-        TimeModel.Make("육", new string[]{"1,5"}),
+        TimeModel.Make("일", new string[]{"1,4"}),
+        TimeModel.Make("이", new string[]{"2,4"}),
+        TimeModel.Make("삼", new string[]{"3,4"}),
+        TimeModel.Make("사", new string[]{"4,4"}),
+        TimeModel.Make("오", new string[]{"0,5"}),
+        TimeModel.Make("육", new string[]{"5,4"}),
         TimeModel.Make("칠", new string[]{"2,5"}),
         TimeModel.Make("팔", new string[]{"3,5"}),
         TimeModel.Make("구", new string[]{"4,5"}),
@@ -132,79 +132,80 @@ public class MainPage : ContentPage
     private Label pageTitle;
 
     enum Row { Title, First, Second, Third, Fourth, Fifth, Sixth }
-	enum Column { First, Second, Third, Fourth, Fifth, Sixth }
-	void Build() => Content = 
-        new Grid { 
+    enum Column { First, Second, Third, Fourth, Fifth, Sixth }
+    void Build() => Content =
+        new Grid
+        {
             BackgroundColor = Color.FromArgb("#101010"),
             Children = {
             (tileGrid = new Grid {
-				RowDefinitions = Rows.Define (
+                RowDefinitions = Rows.Define (
                     (Row.Title, Auto),
-					(Row.First	, Star),
-					(Row.Second , Star),
-					(Row.Third  , Star),
-					(Row.Fourth , Star),
-					(Row.Fifth	, Star),
-					(Row.Sixth	, Star)
-				),
+                    (Row.First  , Star),
+                    (Row.Second , Star),
+                    (Row.Third  , Star),
+                    (Row.Fourth , Star),
+                    (Row.Fifth  , Star),
+                    (Row.Sixth  , Star)
+                ),
 
-				ColumnDefinitions = Columns.Define (
-					(Column.First	, Star),
-					(Column.Second , Star),
-					(Column.Third  , Star),
-					(Column.Fourth , Star),
-					(Column.Fifth	, Star),
-					(Column.Sixth	, Star)
-				),
+                ColumnDefinitions = Columns.Define (
+                    (Column.First   , Star),
+                    (Column.Second , Star),
+                    (Column.Third  , Star),
+                    (Column.Fourth , Star),
+                    (Column.Fifth   , Star),
+                    (Column.Sixth   , Star)
+                ),
 
-				Children = {
+                Children = {
 					// Row 1
 					new TitleLabel{ Text = "한"}.Row(Row.First),
-					new TitleLabel{ Text = "두"}.Row(Row.First).Column(Column.Second),
-					new TitleLabel{ Text = "세"}.Row(Row.First).Column(Column.Third),
-					new TitleLabel{ Text = "네"}.Row(Row.First).Column(Column.Fourth),
-					new TitleLabel{ Text = "다"}.Row(Row.First).Column(Column.Fifth),
-					new TitleLabel{ Text = "섯"}.Row(Row.First).Column(Column.Sixth),
+                    new TitleLabel{ Text = "두"}.Row(Row.First).Column(Column.Second),
+                    new TitleLabel{ Text = "세"}.Row(Row.First).Column(Column.Third),
+                    new TitleLabel{ Text = "네"}.Row(Row.First).Column(Column.Fourth),
+                    new TitleLabel{ Text = "다"}.Row(Row.First).Column(Column.Fifth),
+                    new TitleLabel{ Text = "섯"}.Row(Row.First).Column(Column.Sixth),
 
 					// Row 2
 					new TitleLabel{ Text = "여"}.Row(Row.Second),
-					new TitleLabel{ Text = "섯"}.Row(Row.Second).Column(Column.Second),
-					new TitleLabel{ Text = "일"}.Row(Row.Second).Column(Column.Third),
-					new TitleLabel{ Text = "곱"}.Row(Row.Second).Column(Column.Fourth),
-					new TitleLabel{ Text = "여"}.Row(Row.Second).Column(Column.Fifth),
-					new TitleLabel{ Text = "덟"}.Row(Row.Second).Column(Column.Sixth),
+                    new TitleLabel{ Text = "섯"}.Row(Row.Second).Column(Column.Second),
+                    new TitleLabel{ Text = "일"}.Row(Row.Second).Column(Column.Third),
+                    new TitleLabel{ Text = "곱"}.Row(Row.Second).Column(Column.Fourth),
+                    new TitleLabel{ Text = "여"}.Row(Row.Second).Column(Column.Fifth),
+                    new TitleLabel{ Text = "덟"}.Row(Row.Second).Column(Column.Sixth),
 
 					// Row 3
 					new TitleLabel{ Text = "아"}.Row(Row.Third),
-					new TitleLabel{ Text = "홉"}.Row(Row.Third).Column(Column.Second),
-					new TitleLabel{ Text = "열"}.Row(Row.Third).Column(Column.Third),
-					new TitleLabel{ Text = "한"}.Row(Row.Third).Column(Column.Fourth),
-					new TitleLabel{ Text = "두"}.Row(Row.Third).Column(Column.Fifth),
-					new TitleLabel{ Text = "시"}.Row(Row.Third).Column(Column.Sixth),
+                    new TitleLabel{ Text = "홉"}.Row(Row.Third).Column(Column.Second),
+                    new TitleLabel{ Text = "열"}.Row(Row.Third).Column(Column.Third),
+                    new TitleLabel{ Text = "한"}.Row(Row.Third).Column(Column.Fourth),
+                    new TitleLabel{ Text = "두"}.Row(Row.Third).Column(Column.Fifth),
+                    new TitleLabel{ Text = "시"}.Row(Row.Third).Column(Column.Sixth),
 
 					// Row 4
 					new TitleLabel{ Text = "자"}.Row(Row.Fourth),
-					new TitleLabel{ Text = "이"}.Row(Row.Fourth).Column(Column.Second),
-					new TitleLabel{ Text = "삼"}.Row(Row.Fourth).Column(Column.Third),
-					new TitleLabel{ Text = "사"}.Row(Row.Fourth).Column(Column.Fourth),
-					new TitleLabel{ Text = "오"}.Row(Row.Fourth).Column(Column.Fifth),
-					new TitleLabel{ Text = "십"}.Row(Row.Fourth).Column(Column.Sixth),
+                    new TitleLabel{ Text = "이"}.Row(Row.Fourth).Column(Column.Second),
+                    new TitleLabel{ Text = "삼"}.Row(Row.Fourth).Column(Column.Third),
+                    new TitleLabel{ Text = "사"}.Row(Row.Fourth).Column(Column.Fourth),
+                    new TitleLabel{ Text = "오"}.Row(Row.Fourth).Column(Column.Fifth),
+                    new TitleLabel{ Text = "십"}.Row(Row.Fourth).Column(Column.Sixth),
 
 					// Row 5
 					new TitleLabel{ Text = "정"}.Row(Row.Fifth),
-					new TitleLabel{ Text = "일"}.Row(Row.Fifth).Column(Column.Second),
-					new TitleLabel{ Text = "이"}.Row(Row.Fifth).Column(Column.Third),
-					new TitleLabel{ Text = "삼"}.Row(Row.Fifth).Column(Column.Fourth),
-					new TitleLabel{ Text = "사"}.Row(Row.Fifth).Column(Column.Fifth),
-					new TitleLabel{ Text = "육"}.Row(Row.Fifth).Column(Column.Sixth),
+                    new TitleLabel{ Text = "일"}.Row(Row.Fifth).Column(Column.Second),
+                    new TitleLabel{ Text = "이"}.Row(Row.Fifth).Column(Column.Third),
+                    new TitleLabel{ Text = "삼"}.Row(Row.Fifth).Column(Column.Fourth),
+                    new TitleLabel{ Text = "사"}.Row(Row.Fifth).Column(Column.Fifth),
+                    new TitleLabel{ Text = "육"}.Row(Row.Fifth).Column(Column.Sixth),
 
 					// Row 6
 					new TitleLabel{ Text = "오"}.Row(Row.Sixth),
-					new TitleLabel{ Text = "오"}.Row(Row.Sixth).Column(Column.Second),
-					new TitleLabel{ Text = "칠"}.Row(Row.Sixth).Column(Column.Third),
-					new TitleLabel{ Text = "팔"}.Row(Row.Sixth).Column(Column.Fourth),
-					new TitleLabel{ Text = "구"}.Row(Row.Sixth).Column(Column.Fifth),
-					new TitleLabel{ Text = "분"}.Row(Row.Sixth).Column(Column.Sixth),
+                    new TitleLabel{ Text = "오"}.Row(Row.Sixth).Column(Column.Second),
+                    new TitleLabel{ Text = "칠"}.Row(Row.Sixth).Column(Column.Third),
+                    new TitleLabel{ Text = "팔"}.Row(Row.Sixth).Column(Column.Fourth),
+                    new TitleLabel{ Text = "구"}.Row(Row.Sixth).Column(Column.Fifth),
+                    new TitleLabel{ Text = "분"}.Row(Row.Sixth).Column(Column.Sixth),
 
                     // title
                     new Label{Text = "지금 몇 시예요?", TextColor = Colors.White, FontSize = 44, HorizontalTextAlignment = TextAlignment.Center }
@@ -212,27 +213,28 @@ public class MainPage : ContentPage
                         .Center()
                         .Assign(out pageTitle)
 
-				}
+                }
             })
             .Margins(top: _windowMargin, bottom: _windowMargin, left: _windowMargin, right: _windowMargin)
             //.CenterHorizontal().CenterVertical()
-        } };
+        }
+        };
 
-		class TitleLabel : Label
-		{
-			public TitleLabel()
-			{
-				FontSize = (DeviceInfo.Idiom == DeviceIdiom.Phone) ? 32 : 64;
-				TextColor = Colors.White;
-                Opacity = 0.2;
+    class TitleLabel : Label
+    {
+        public TitleLabel()
+        {
+            FontSize = (DeviceInfo.Idiom == DeviceIdiom.Phone) ? 32 : 64;
+            TextColor = Colors.White;
+            Opacity = 0.2;
 
-				VerticalTextAlignment = TextAlignment.Center;
-				HorizontalTextAlignment = TextAlignment.Center;
+            VerticalTextAlignment = TextAlignment.Center;
+            HorizontalTextAlignment = TextAlignment.Center;
 
-				Padding = new Thickness(10, 10);
-			}
-		}
-    
+            Padding = new Thickness(10, 10);
+        }
+    }
+
     public MainPage()
     {
         this.Behaviors.Add(new StatusBarBehavior
@@ -254,14 +256,15 @@ public class MainPage : ContentPage
             {
                 Build();
             });
-            
+
         };
 #endif
     }
 
     private void timer_Handler(object sender, System.Timers.ElapsedEventArgs e)
     {
-        Dispatcher.Dispatch(() =>{
+        Dispatcher.Dispatch(() =>
+        {
             ResetGrid();
             UpdateGrid();
         });
@@ -273,25 +276,29 @@ public class MainPage : ContentPage
         var d = DateTime.Now;
 
         var hourModel = HoursMap[d.Hour % 12];
-        int cnt = tileGrid.Children.Where(c => {
-            foreach(var t in hourModel.Tiles)
+        int cnt = tileGrid.Children.Where(c =>
+        {
+            foreach (var t in hourModel.Tiles)
             {
-                if((tileGrid.GetRow(c) == t.Y && tileGrid.GetColumn(c) == t.X) || ((Label)c).Text == "시")
+                // Add 1 to t.Y to account for Title row at row 0
+                if ((tileGrid.GetRow(c) == t.Y + 1 && tileGrid.GetColumn(c) == t.X) || ((Label)c).Text == "시")
                 {
                     ((Label)c).Opacity = 1;
                     ((Label)c).TextColor = Colors.LawnGreen;
                     return true;
                 }
-                    
+
             }
             return false;
         }).Count();
 
         var minuteModel = MinutesMap[d.Minute];
-        int cnt2 = tileGrid.Children.Where(c => {
+        int cnt2 = tileGrid.Children.Where(c =>
+        {
             foreach (var t in minuteModel.Tiles)
             {
-                if ((tileGrid.GetRow(c) == t.Y && tileGrid.GetColumn(c) == t.X) || ((Label)c).Text == "분")
+                // Add 1 to t.Y to account for Title row at row 0
+                if ((tileGrid.GetRow(c) == t.Y + 1 && tileGrid.GetColumn(c) == t.X) || ((Label)c).Text == "분")
                 {
                     ((Label)c).Opacity = 1;
                     ((Label)c).TextColor = Colors.OrangeRed;
@@ -305,10 +312,10 @@ public class MainPage : ContentPage
 
     private void ResetGrid()
     {
-        foreach(var l in tileGrid.Children)
+        foreach (var l in tileGrid.Children)
         {
             ((Label)l).Opacity = 0.2;
-            ((Label)l).TextColor = Colors.White;
+            ((Label)l).TextColor = Colors.DimGray;
         }
 
         pageTitle.Opacity = 1;
