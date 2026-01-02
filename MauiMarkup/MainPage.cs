@@ -226,7 +226,7 @@ public class MainPage : ContentPage
         {
             FontSize = (DeviceInfo.Idiom == DeviceIdiom.Phone) ? 32 : 64;
             TextColor = Colors.White;
-            Opacity = 0.2;
+            Opacity = 0.4;
 
             VerticalTextAlignment = TextAlignment.Center;
             HorizontalTextAlignment = TextAlignment.Center;
@@ -314,8 +314,8 @@ public class MainPage : ContentPage
     {
         foreach (var l in tileGrid.Children)
         {
-            ((Label)l).Opacity = 0.2;
-            ((Label)l).TextColor = Colors.DimGray;
+            ((Label)l).Opacity = 0.4;
+            ((Label)l).TextColor = Colors.Black;
         }
 
         pageTitle.Opacity = 1;
