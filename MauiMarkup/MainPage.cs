@@ -208,7 +208,7 @@ public class MainPage : ContentPage
                     new TitleLabel{ Text = "분"}.Row(Row.Sixth).Column(Column.Sixth),
 
                     // title
-                    new Label{Text = "지금 몇 시예요?", TextColor = Colors.White, FontSize = 44, HorizontalTextAlignment = TextAlignment.Center }
+                    new Label{Text = DateTime.Now.ToString("hh:mm:ss tt"), TextColor = Colors.White, FontSize = 44, HorizontalTextAlignment = TextAlignment.Center }
                         .Row(Row.Title).ColumnSpan(6)
                         .Center()
                         .Assign(out pageTitle)
@@ -274,6 +274,9 @@ public class MainPage : ContentPage
     private void UpdateGrid()
     {
         var d = DateTime.Now;
+
+        // Update the digital time display
+        pageTitle.Text = d.ToString("hh:mm:ss tt");
 
         var hourModel = HoursMap[d.Hour % 12];
         int cnt = tileGrid.Children.Where(c =>
